@@ -1,24 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Linq;
 
 namespace Project
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -26,12 +10,24 @@ namespace Project
             InitializeComponent();
         }
 
-        private void ButtonAddName_Click(object sender, RoutedEventArgs e)
+        private void przycisk1_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(txtName.Text) && !lstNames.Items.Contains(txtName.Text))
+            double i1 = Convert.ToDouble(liczba1.Text);
+            int i2 = int.Parse(liczba2.Text);
+
+            functionOnClick(i1, i2);
+        }
+
+        private void functionOnClick(double i1, int i2)
+        {
+            if (i2 > 15)
             {
-                lstNames.Items.Add(txtName.Text);
-                txtName.Clear();
+                wynik1.Text = "Podaj liczbę mniejszą od 15";
+            }
+            else
+            {
+                double w = Math.Sqrt(i1);
+                wynik1.Text = Math.Round(w, i2).ToString();
             }
         }
     }
