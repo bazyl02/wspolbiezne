@@ -9,13 +9,13 @@ namespace Project
         {
             InitializeComponent();
         }
-
-        private void przycisk1_Click(object sender, RoutedEventArgs e)
+        
+        private void button_Click(object sender, RoutedEventArgs e)
         {
-            double i1 = Convert.ToDouble(liczba1.Text);
-            int i2 = int.Parse(liczba2.Text);
+            double i1 = Convert.ToDouble(value1.Text);
+            int i2 = int.Parse(value2.Text);
 
-            wynik1.Text = Functions.functionOnClick(i1, i2);
+            result.Text = Functions.functionOnClick(i1, i2);
         }
     }
 }

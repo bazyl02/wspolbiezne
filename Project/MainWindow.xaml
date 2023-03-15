@@ -7,11 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TextBox Name="liczba1" HorizontalAlignment="Left" Margin="102,83,0,0" TextWrapping="Wrap" Text="12" VerticalAlignment="Top" FontSize="20" Width="205" Height="30"/>
-        <TextBox Name="liczba2" HorizontalAlignment="Left" Margin="492,83,0,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" FontSize="20" Width="116" Height="30"/>
-        <Button Name="przycisk1"  Content="Oblicz" HorizontalAlignment="Left" Margin="340,182,0,0" VerticalAlignment="Top" FontSize="20" Height="54" Width="90" Click="przycisk1_Click"/>
+        <TextBox Name="value1" HorizontalAlignment="Left" Margin="102,83,0,0" TextWrapping="Wrap" Text="12" VerticalAlignment="Top" FontSize="20" Width="205" Height="30"/>
+        <TextBox Name="value2" HorizontalAlignment="Left" Margin="492,83,0,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" FontSize="20" Width="116" Height="30"/>
+        <Button Name="button"  Content="Oblicz" HorizontalAlignment="Left" Margin="340,182,0,0" VerticalAlignment="Top" FontSize="20" Height="54" Width="90" Click="button_Click"/>
         <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Program obliczający pierwiastek wartości X1 z dokładością do X2 miejsc po przecinku" VerticalAlignment="Top" FontSize="18" Height="30" Width="689"/>
-        <TextBlock Name="wynik1" HorizontalAlignment="Left" Margin="204,323,0,0" TextWrapping="Wrap" Text="wynik" VerticalAlignment="Top" FontSize="20" Height="69" Width="346"/>
+        <TextBlock Name="result" HorizontalAlignment="Left" Margin="204,323,0,0" TextWrapping="Wrap" Text="wynik" VerticalAlignment="Top" FontSize="20" Height="69" Width="346"/>
         <Label Content="X1 = " HorizontalAlignment="Left" FontSize="15" Margin="57,83,0,0" VerticalAlignment="Top"/>
         <Label Content="X2 = " HorizontalAlignment="Left" FontSize="15" Margin="447,83,0,0" VerticalAlignment="Top"/>
         <Label Content="(max 15)" HorizontalAlignment="Left" Margin="553,83,0,0" VerticalAlignment="Top"/>
