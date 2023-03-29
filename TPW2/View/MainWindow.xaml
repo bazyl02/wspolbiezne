@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TPW2"
         mc:Ignorable="d"
-        Title="Balls ( ͡° ͜ʖ ͡°)" Height="450" Width="800">
+        Title="Balls ( ͡° ͜ʖ ͡°)" WindowState="Maximized" ResizeMode="CanResize">
     <Canvas Name="myCanvas" Background="LightGreen" Focusable="True" MouseLeftButtonDown="AddOrRemoveItems">
-
+        <DockPanel LastChildFill="False">
+            <StackPanel Width="150" DockPanel.Dock="Top">
+                <TextBox x:Name="data" Text="{Binding Ball.Amount, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </DockPanel>
     </Canvas>
 </Window>

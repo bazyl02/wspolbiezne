@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <Folder Include="Exceptions\" />
-    <Folder Include="ViewModel\" />
+    <Folder Include="Model\" />
   </ItemGroup>
 
 </Project>

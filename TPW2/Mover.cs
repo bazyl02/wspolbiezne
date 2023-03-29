@@ -3,20 +3,25 @@ using System.Numerics;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using TPW2.ViewModel;
 
-namespace TPW2.Model
+namespace TPW2
 {
-    class Mover
+    public class Mover
     {
         static Random r = new Random();
-        Vector2 location;
-        Vector2 velocity;
+        private Vector2 location;
+        private Vector2 velocity;
         private double width;
         private double height;
         private double posX;
         private double posY;
-        Ellipse ellipse;
-        Brush customColor;
+        private Ellipse ellipse;
+        private Brush customColor;
+        private int ellipseWidth = 50;
+        private int ellipseHeight = 50;
+
+        BallViewModel ball = new BallViewModel();
 
         public Mover(double width, double height, Canvas myCanvas, double posX, double posY)
         {
@@ -32,31 +37,32 @@ namespace TPW2.Model
             ellipse = new Ellipse()
             {
                 Tag = "ball1",
-                Width = 50,
-                Height = 50,
+                Width = ellipseWidth,
+                Height = ellipseHeight,
                 Fill = customColor,
                 StrokeThickness = 1,
                 Stroke = Brushes.Black
             };
-            Canvas.SetLeft(ellipse, location.X);
-            Canvas.SetTop(ellipse, location.Y);
-            myCanvas.Children.Add(ellipse);
+
+            ball.Update(true, myCanvas, ellipse, changeMovement());
         }
 
-        public void Update()
+        public Ellipse Ellipse { get { return ellipse; } }
+
+
+        public Vector2 changeMovement()
         {
-            if (location.X < 0 || location.X > width - 65)
+            if (location.X < 0 || location.X > width - ellipseWidth)
             {
                 velocity.X = velocity.X * -1;
             }
-            if (location.Y < 0 || location.Y > height - 87)
+            if (location.Y < 0 || location.Y > height - ellipseHeight)
             {
                 velocity.Y = velocity.Y * -1;
             }
             location = Vector2.Add(location, velocity);
 
-            Canvas.SetLeft(ellipse, location.X);
-            Canvas.SetTop(ellipse, location.Y);
+            return location;
         }
     }
 }

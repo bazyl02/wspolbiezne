@@ -1,21 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using TPW2.Model;
+using TPW2.ViewModel;
 
 namespace TPW2
 {
@@ -23,19 +12,13 @@ namespace TPW2
     {
         Mover mover;
         List<Mover> movers = new List<Mover>();
-        int speed = 10;
         DispatcherTimer timer = new DispatcherTimer();
-
+        MainViewModel _main = new MainViewModel();
 
         public MainWindow()
         {
             InitializeComponent();
-            Load();
-        }
-
-
-        private void Load()
-        {
+            DataContext = _main;
             myCanvas.Focus();
             timer.Tick += Timer_Tick;
             timer.Interval = TimeSpan.FromMilliseconds(20);
@@ -44,10 +27,16 @@ namespace TPW2
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            foreach(var item in movers)
+            foreach (var item in movers)
             {
-                item.Update();
+                _main.Ball.Update(false, myCanvas, item.Ellipse, item.changeMovement());
             }
+            for (int i = 0;  i < Int32.Parse(_main.Ball.Amount); i++)
+            {
+                mover = new Mover(myCanvas.ActualWidth, myCanvas.ActualHeight, myCanvas, myCanvas.ActualWidth / 2, myCanvas.ActualHeight / 2);
+                movers.Add(mover);
+            }
+            data.Text = "";
         }
 
         private void AddOrRemoveItems(object sender, MouseButtonEventArgs e)
@@ -60,7 +49,7 @@ namespace TPW2
             }
             else
             {
-                mover = new Mover(Application.Current.MainWindow.Width, Application.Current.MainWindow.Height, myCanvas, Mouse.GetPosition(myCanvas).X, Mouse.GetPosition(myCanvas).Y);
+                mover = new Mover(myCanvas.ActualWidth, myCanvas.ActualHeight, myCanvas, Mouse.GetPosition(myCanvas).X, Mouse.GetPosition(myCanvas).Y);
                 movers.Add(mover);
             }
         }
