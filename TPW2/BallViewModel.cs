@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using System.Windows.Controls;
 using System.Windows.Shapes;
+using Logic;
 
 namespace TPW2.ViewModel
 {

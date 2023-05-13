@@ -1,11 +1,11 @@
 ﻿
 namespace TPW2.ViewModel
 {
-    public class MainViewModel
+    public class MainWindowViewModel
     {
         public BallViewModel Ball { get; private set; }
 
-        public MainViewModel()
+        public MainWindowViewModel()
         {
             Ball = new BallViewModel();
         }

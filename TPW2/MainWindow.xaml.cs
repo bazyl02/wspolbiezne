@@ -13,7 +13,7 @@ namespace TPW2
         Mover mover;
         List<Mover> movers = new List<Mover>();
         DispatcherTimer timer = new DispatcherTimer();
-        MainViewModel _main = new MainViewModel();
+        MainWindowViewModel _main = new MainWindowViewModel();
 
         public MainWindow()
         {
@@ -33,7 +33,7 @@ namespace TPW2
             }
             for (int i = 0;  i < Int32.Parse(_main.Ball.Amount); i++)
             {
-                mover = new Mover(myCanvas.ActualWidth, myCanvas.ActualHeight, myCanvas, myCanvas.ActualWidth / 2, myCanvas.ActualHeight / 2);
+                mover = new Mover((int)myCanvas.ActualWidth, (int)myCanvas.ActualHeight, myCanvas, myCanvas.ActualWidth / 2, myCanvas.ActualHeight / 2);
                 movers.Add(mover);
             }
             data.Text = "";
@@ -49,7 +49,7 @@ namespace TPW2
             }
             else
             {
-                mover = new Mover(myCanvas.ActualWidth, myCanvas.ActualHeight, myCanvas, Mouse.GetPosition(myCanvas).X, Mouse.GetPosition(myCanvas).Y);
+                mover = new Mover((int)myCanvas.ActualWidth, (int)myCanvas.ActualHeight, myCanvas, Mouse.GetPosition(myCanvas).X, Mouse.GetPosition(myCanvas).Y);
                 movers.Add(mover);
             }
         }

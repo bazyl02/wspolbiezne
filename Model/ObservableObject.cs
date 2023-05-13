@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace TPW2
+namespace Logic
 {
     public class ObservableObject : INotifyPropertyChanged
     {

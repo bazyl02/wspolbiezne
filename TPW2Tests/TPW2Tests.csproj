@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TPW2\TPW2.csproj" />
+    <ProjectReference Include="..\TPW2\Presentation.View.csproj" />
   </ItemGroup>
 
 </Project>
