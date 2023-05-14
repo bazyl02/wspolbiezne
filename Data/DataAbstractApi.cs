@@ -10,9 +10,9 @@ namespace Data
         }
         public abstract void CreateBalls(int number);
         public abstract void StopBalls();
-        public abstract ObservableCollection<BallData> GetBalls();
-        public abstract int GetWidth();
-        public abstract int GetHeight(); 
+        public abstract ObservableCollection<BallData> GetBalls { get; }
+        public abstract int Width { get; }
+        public abstract int Height { get; }
     }
 
     public class DataApi : DataAbstractApi
@@ -28,17 +28,9 @@ namespace Data
         {
             mover.StopBalls();
         }
-        public override ObservableCollection<BallData> GetBalls()
-        {
-            return mover.GetBalls();
-        }
-        public override int GetHeight()
-        {
-            return mover.GetHeight();
-        }
-        public override int GetWidth()
-        {
-            return mover.GetWidth();
-        }
+
+        public override ObservableCollection<BallData> GetBalls { get => mover.Balls; }
+        public override int Height { get => mover.Height; }
+        public override int Width { get => mover.Width; }
     }
 }

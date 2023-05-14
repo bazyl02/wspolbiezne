@@ -1,5 +1,4 @@
 ﻿using Data;
-using Logic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Numerics;
@@ -9,7 +8,7 @@ namespace Logic
     public abstract class LogicAbstractApi
     {
         public List<BallLogic> ballList = new List<BallLogic>();
-        public static LogicAbstractApi CreateApi(DataAbstractApi data = default)
+        public static LogicAbstractApi CreateApi(DataAbstractApi? data = default)
         {
             return new AbstractApiLogic(data ?? DataAbstractApi.CreateApi());
         }
@@ -17,8 +16,8 @@ namespace Logic
         public abstract void StopBalls();
         public abstract ObservableCollection<BallData> Balls { get; }
         public abstract List<BallLogic> GetBalls();
-        public abstract int GetHeight();
-        public abstract int GetWidth();
+        public abstract int Height { get; }
+        public abstract int Width { get; }
 
         public abstract void Collisions(int i, int i1, int ball1Radius, BallData ball1);
         public abstract void BallCrash(BallData ball2, BallData ball3);
@@ -27,15 +26,10 @@ namespace Logic
     public class AbstractApiLogic : LogicAbstractApi
     {
         private readonly DataAbstractApi data;
-        public override ObservableCollection<BallData> Balls => data.GetBalls();
-        public override int GetWidth()
-        {
-            return data.GetWidth();
-        }
-        public override int GetHeight()
-        {
-            return data.GetHeight();
-        }
+        public override ObservableCollection<BallData> Balls => data.GetBalls;
+        public override int Width => data.Width;
+        public override int Height => data.Height;
+
         public AbstractApiLogic(DataAbstractApi dataAbstractApi)
         {
             data = dataAbstractApi;
@@ -43,7 +37,7 @@ namespace Logic
         public override void CreateBalls(int number)
         {
             data.CreateBalls(number);
-            foreach (BallData ball in data.GetBalls())
+            foreach (BallData ball in data.GetBalls)
             {
                 ballList.Add(new BallLogic(ball));
                 ball.PropertyChanged += checkMovement;
@@ -58,12 +52,13 @@ namespace Logic
         {
             return ballList;
         }
+
         public void checkMovement(object sender, PropertyChangedEventArgs e)
         {
-            BallData ball = (BallData)sender;
+            BallData b = (BallData)sender;
             if (e.PropertyName == "ChangeLocation")
             {
-                Collisions(GetWidth(), GetHeight(), ball.GetRadius(), ball);
+                Collisions(Width, Height, b.Radius, b);
             }
         }
         public override void Collisions(int width, int height, int radius, BallData ball)
@@ -71,24 +66,24 @@ namespace Logic
             List<String> list = new List<String>();
             foreach (BallLogic thisBall in ballList)
             {
-                list.Add(thisBall.Ball().GetColor());
+                list.Add(thisBall.Ball.Color);
             }
             foreach (BallLogic thisBall in ballList)
             {
-                if (thisBall.Ball() == ball)
+                if (thisBall.Ball == ball)
                 {
                     continue;
                 }
-                float distance = Vector2.Distance(ball.Location, thisBall.Ball().Location);
-                if (distance <= (ball.GetRadius() + thisBall.Ball().GetRadius()))
+                float distance = Vector2.Distance(ball.Location, thisBall.Ball.Location);
+                if (distance <= (ball.Radius + thisBall.Ball.Radius))
                 {
-                    if (Vector2.Distance(ball.Location, thisBall.Ball().Location)
-                    - Vector2.Distance(ball.Location + ball.Velocity, thisBall.Ball().Location
-                    + thisBall.Ball().Velocity) > 0)
+                    if (Vector2.Distance(ball.Location, thisBall.Ball.Location)
+                    - Vector2.Distance(ball.Location + ball.Velocity, thisBall.Ball.Location
+                    + thisBall.Ball.Velocity) > 0)
                     {
-                        if (list.Contains(ball.GetColor()))
+                        if (list.Contains(ball.Color))
                         {
-                            BallCrash(ball, thisBall.Ball());
+                            BallCrash(ball, thisBall.Ball);
                         }
                     }
                 }
@@ -104,8 +99,8 @@ namespace Logic
         }
         public override void BallCrash(BallData b1, BallData b2)
         {
-            Vector2 newVelocity1 = b2.Velocity;
-            Vector2 newVelocity2 = b1.Velocity;
+            Vector2 newVelocity1 = (b1.Velocity * (b1.Mass - b2.Mass) + b2.Velocity * 2 * b2.Mass) / (b1.Mass + b2.Mass);
+            Vector2 newVelocity2 = (b2.Velocity * (b2.Mass - b1.Mass) + b1.Velocity * 2 * b1.Mass) / (b1.Mass + b2.Mass);
             b1.Velocity = newVelocity1;
             b2.Velocity = newVelocity2;
         }

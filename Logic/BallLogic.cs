@@ -18,21 +18,10 @@ namespace Logic
         {
             RaisePropertyChanged("ChangeLocation");
         }
-
-        public BallData Ball()
-        {
-            return ball;
-        }
-
-        public string Color()
-        {
-            return ball.GetColor();
-        }
-        public int Radius()
-        {
-            return ball.GetRadius();
-        }
-
+        public BallData Ball { get => ball; }
+        public string Color { get => ball.Color; }
+        public int Radius { get => ball.Radius; }
+        public float Mass1 { get => ball.Mass; }
         public float LocationX
         {
             get => ball.LocationX;

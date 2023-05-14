@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using Logic;
-using Presentation.Model;
 
 namespace Presentation.Model
 {
@@ -13,8 +12,8 @@ namespace Presentation.Model
         }
         public abstract ObservableCollection<BallModel> CreateBalls(int number);
         public abstract void StopBalls();
-        public abstract int GetHeight();
-        public abstract int GetWidth();
+        public abstract int Height { get; }
+        public abstract int Width { get; }
         public ObservableCollection<BallModel> BallsModel
         {
             get => ballsModel;
@@ -28,14 +27,10 @@ namespace Presentation.Model
             {
                 logic = logicLayer;
             }
-            public override int GetWidth()
-            {
-                return logic.GetWidth();
-            }
-            public override int GetHeight()
-            {
-                return logic.GetHeight();
-            }
+            public override int Width { get => logic.Width; }
+            public override int Height { get => logic.Height; }
+
+
             public override ObservableCollection<BallModel> CreateBalls(int number)
             {
                 logic.CreateBalls(number);

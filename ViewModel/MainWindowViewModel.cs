@@ -20,8 +20,8 @@ namespace Presentation.ViewModel
             model = AbstractApiModel.CreateAPI();
             Add = new RelayCommand(() => CreateBalls());
             Remove = new RelayCommand(() => StopBalls());
-            height = model.GetHeight();
-            width = model.GetWidth();
+            height = model.Height;
+            width = model.Width;
             balls = model.BallsModel;
         }
         public int Width
@@ -77,8 +77,9 @@ namespace Presentation.ViewModel
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
-        protected virtual void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
         {
+
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }

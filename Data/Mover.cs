@@ -2,26 +2,21 @@ using System.Collections.ObjectModel;
 
 namespace Data
 {
-public class Mover 
+    public class Mover
     {
-        private static int borderWidth = 1280;
-        private static int borderHeight = 650;
+        public static int borderWidth = 1280;
+        public static int borderHeight = 650;
         private BallGenerator generator = new BallGenerator();
         private ObservableCollection<BallData> balls = new ObservableCollection<BallData>();
         private readonly List<Task> tasks = new List<Task>();
 
-
         public Mover()
         {
         }
-        public int GetWidth()
-        { 
-            return borderWidth; 
-        }
-        public int GetHeight()
-        {
-            return borderHeight;
-        }
+        public int Width { get => borderWidth; }
+        public int Height { get => borderHeight; }
+        public ObservableCollection<BallData> Balls { get => balls; }
+
         public void CreateBalls(int number)
         {
             if (number > 0)
@@ -32,16 +27,16 @@ public class Mover
                     balls.Add(ball);
                 }
                 Moving();
-                
             }
-            
         }
+
         public void StopBalls()
         {
             tasks.Clear();
             balls.Clear();
             Moving();
         }
+
         public void Moving()
         {
             foreach (BallData ball in balls)
@@ -50,16 +45,12 @@ public class Mover
                 {
                     while (true)
                     {
-                        await Task.Delay(10);
+                        await Task.Delay(5);
                         ball.UpdatePosition();
                     }
                 });
                 tasks.Add(task);
             }
-        }
-        public ObservableCollection<BallData> GetBalls()
-        {
-            return balls;
         }
     }
 }

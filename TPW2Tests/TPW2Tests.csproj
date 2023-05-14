@@ -14,9 +14,8 @@
     <PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
     <PackageReference Include="coverlet.collector" Version="3.1.2" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\TPW2\Presentation.View.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Logic\Logic.csproj" />
+	</ItemGroup>
 
 </Project>

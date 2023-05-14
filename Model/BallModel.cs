@@ -11,14 +11,16 @@ namespace Presentation.Model
         private float posY;
         private int radius;
         private string color;
+        private float mass;
         public BallModel(BallLogic ball)
         {
             Random r = new Random();
             ball.PropertyChanged += BallPropertyChanged;
             XPosition = ball.LocationX;
             YPosition = ball.LocationY;
-            Radius = ball.Radius();
-            Color = ball.Color();
+            Radius = ball.Radius;
+            Color = ball.Color;
+            BallMass = ball.Mass1;
         }
         public int Size { get => 2 * Radius; }
 
@@ -29,6 +31,12 @@ namespace Presentation.Model
             {
                 color = value;
             }
+        }
+
+        public float BallMass
+        {
+            get => 2 * mass;
+            set => mass = value;
         }
 
         public int Radius

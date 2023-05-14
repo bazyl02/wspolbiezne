@@ -35,7 +35,7 @@
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Ellipse Height="{Binding Size}" Width="{Binding Size}" Fill="{Binding Color}" StrokeThickness="1" Stroke="Black"/>
+                        <Ellipse Height="{Binding Size}" Width="{Binding Size}" Fill="{Binding Color}" StrokeThickness="{Binding BallMass}" Stroke="Black"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
