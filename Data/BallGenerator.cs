@@ -7,9 +7,9 @@ namespace Data
         private Random r = new Random();
         private int posX;
         private int posY;
-        private int radius = 25;
-        public static int spawnWidth = 1280 - 25;
-        public static int spawnHeight = 650 - 25;
+        private static int radius = 25;
+        public static int spawnWidth = 1280 - Radius;
+        public static int spawnHeight = 650 - Radius;
         private Vector2 location;
         private Vector2 velocity;
         private string color;
@@ -26,5 +26,7 @@ namespace Data
             color = System.String.Format("#{0:X}", r.Next(0, 0xFFFFFF));
             return new BallData(location, radius, mass, velocity, color);
         }
+
+        public static int Radius { get => radius; }
     }
 }

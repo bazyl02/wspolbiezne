@@ -45,7 +45,7 @@ namespace Data
                 {
                     while (true)
                     {
-                        await Task.Delay(5);
+                        await Task.Delay(10);
                         ball.UpdatePosition();
                     }
                 });

@@ -88,11 +88,11 @@ namespace Logic
                     }
                 }
             }
-            if (ball.LocationX < 0 || ball.LocationX > width - radius * 2)
+            if ((ball.LocationX-1 < 0 && ball.VelocityX < 0) || (ball.LocationX-1 > Width - radius * 2 && ball.VelocityX > 0))
             {
                 ball.VelocityX = ball.VelocityX * -1;
             }
-            if (ball.LocationY < 0 || ball.LocationY > height - radius * 2)
+            if ((ball.LocationY-1 < 0 && ball.VelocityY < 0) || (ball.LocationY-1 > Height - radius * 2 && ball.VelocityY > 0))
             {
                 ball.VelocityY = ball.VelocityY * -1;
             }
