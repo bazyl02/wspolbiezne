@@ -35,7 +35,20 @@ namespace Data
         public Vector2 Velocity
         {
             get => velocity;
-            set => velocity = value;
+            set
+            {
+                if (value.Y > 5)
+                    value.Y = 5;
+                else if (value.Y < -5)
+                    value.Y = -5;
+                velocity.Y = value.Y;
+
+                if (value.X > 5)
+                    value.X = 5;
+                else if (value.X < -5)
+                    value.X = -5;
+                velocity.X = value.X;
+            }
         }
         public float LocationX
         {
@@ -50,26 +63,12 @@ namespace Data
         public float VelocityX
         {
             get => velocity.X;
-            set
-            {
-                if (value > 5)
-                    value = 5;
-                else if (value < -5)
-                    value = -5;
-                velocity.X = value;
-            }
+            set => velocity.X = value;
         }
         public float VelocityY
         {
             get => velocity.Y;
-            set
-            {
-                if (value > 5)
-                    value = 5;
-                else if (value < -5)
-                    value = -5;
-                velocity.Y = value;
-            }
+            set => velocity.Y = value;
         }
         public float Mass
         {
