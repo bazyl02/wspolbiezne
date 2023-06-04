@@ -1,4 +1,6 @@
 using System.Collections.ObjectModel;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Data
 {
@@ -9,6 +11,8 @@ namespace Data
         private BallGenerator generator = new BallGenerator();
         private ObservableCollection<BallData> balls = new ObservableCollection<BallData>();
         private readonly List<Task> tasks = new List<Task>();
+        private object lockFile = new object();
+        string fileName = "logs.json";
 
         public Mover()
         {
@@ -51,6 +55,33 @@ namespace Data
                 });
                 tasks.Add(task);
             }
+            tasks.Add(Task.Run(async () =>
+            {
+                System.IO.File.WriteAllText(fileName, string.Empty);
+                while (true)
+                {
+                    var options = new JsonSerializerOptions { WriteIndented = true };
+
+                    string jsonString = "[ \"Date/Time\": \"" + DateTime.Now.ToString() 
+                    + "\",\n  \"Balls list\": " + JsonSerializer.Serialize(balls, options) + " ]\n";
+
+                    lock (lockFile)
+                    {
+                        File.AppendAllText(fileName, jsonString);
+                    }
+                    await Task.Delay(1000);
+                }
+            }));
+        }
+
+        public object LockFile
+        {
+            get => lockFile;
+        }
+
+        public string FileName
+        {
+            get => fileName;
         }
     }
 }

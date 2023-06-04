@@ -23,7 +23,7 @@ namespace Data
             location = new Vector2(posX, posY);
             velocity = new Vector2((float)r.NextDouble() * 4 - 2, (float)r.NextDouble() * 4 - 2);
             float mass = (float)r.NextDouble() * 2;
-            color = System.String.Format("#{0:X}", r.Next(0, 0xFFFFFF));
+            color = System.String.Format("#{0:X6}", r.Next(0, 0xFFFFFF));
             return new BallData(location, radius, mass, velocity, color);
         }
 

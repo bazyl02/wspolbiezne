@@ -13,6 +13,9 @@ namespace Data
         public abstract ObservableCollection<BallData> GetBalls { get; }
         public abstract int Width { get; }
         public abstract int Height { get; }
+        public abstract object LockFile { get; }
+        public abstract string FileName { get; }
+        public abstract void lockOnFile();
     }
 
     public class DataApi : DataAbstractApi
@@ -32,5 +35,18 @@ namespace Data
         public override ObservableCollection<BallData> GetBalls { get => mover.Balls; }
         public override int Height { get => mover.Height; }
         public override int Width { get => mover.Width; }
+
+        public override object LockFile
+        {
+            get => mover.LockFile;
+        }
+        public override string FileName
+        {
+            get => mover.FileName;
+        }
+        public override void lockOnFile()
+        {
+
+        }
     }
 }

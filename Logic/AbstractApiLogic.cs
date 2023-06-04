@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Numerics;
+using System.Text.Json;
 
 namespace Logic
 {
@@ -18,6 +19,8 @@ namespace Logic
         public abstract List<BallLogic> GetBalls();
         public abstract int Height { get; }
         public abstract int Width { get; }
+        public abstract object LockFile { get; }
+        public abstract string FileName { get; }
 
         public abstract void Collisions(int i, int i1, int ball1Radius, BallData ball1);
         public abstract void BallCrash(BallData ball2, BallData ball3);
@@ -29,6 +32,10 @@ namespace Logic
         public override ObservableCollection<BallData> Balls => data.GetBalls;
         public override int Width => data.Width;
         public override int Height => data.Height;
+        public override object LockFile => data.LockFile;
+        public override string FileName => data.FileName;
+        private string jsonString;
+        JsonSerializerOptions options = new JsonSerializerOptions { WriteIndented = true };
 
         public AbstractApiLogic(DataAbstractApi dataAbstractApi)
         {
@@ -78,8 +85,8 @@ namespace Logic
                 if (distance <= (ball.Radius + thisBall.Ball.Radius))
                 {
                     if (Vector2.Distance(ball.Location, thisBall.Ball.Location)
-                    - Vector2.Distance(ball.Location + ball.Velocity, thisBall.Ball.Location
-                    + thisBall.Ball.Velocity) > 0)
+                        - Vector2.Distance(ball.Location + ball.Velocity, thisBall.Ball.Location
+                        + thisBall.Ball.Velocity) > 0)
                     {
                         if (list.Contains(ball.Color))
                         {
@@ -101,8 +108,21 @@ namespace Logic
         {
             Vector2 newVelocity1 = (b1.Velocity * (b1.Mass - b2.Mass) + b2.Velocity * 2 * b2.Mass) / (b1.Mass + b2.Mass);
             Vector2 newVelocity2 = (b2.Velocity * (b2.Mass - b1.Mass) + b1.Velocity * 2 * b1.Mass) / (b1.Mass + b2.Mass);
+            Vector2 oldVelocity1 = b1.Velocity;
+            Vector2 oldVelocity2 = b2.Velocity;
             b1.Velocity = newVelocity1;
             b2.Velocity = newVelocity2;
+            jsonString = "[ \"Date/Time\": \"" + DateTime.Now.ToString() + "\",\n  \"Balls crash\": "
+            + "\n\"Ball 1\": " + JsonSerializer.Serialize(b1, options) 
+            + " \"Previous VelocityX\":" + JsonSerializer.Serialize(oldVelocity1.X, options)
+            + "\n  \"Previous VelocityY\":" + JsonSerializer.Serialize(oldVelocity1.Y, options)
+            + "\n\"Ball 2\": " + JsonSerializer.Serialize(b2, options) 
+            + " \"Previous VelocityX\":" + JsonSerializer.Serialize(oldVelocity2.X, options)
+            + "\n  \"Previous VelocityY\":" + JsonSerializer.Serialize(oldVelocity2.Y, options) + " ]\n";
+            lock (LockFile)
+            {
+                File.AppendAllText(FileName, jsonString);
+            }
         }
     }
 }

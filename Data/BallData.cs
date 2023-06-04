@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Numerics;
+using System.Text.Json.Serialization;
 
 namespace Data
 {
@@ -27,11 +28,15 @@ namespace Data
         }
         public int Radius { get => radius; }
         public string Color { get => color; }
+
+        [JsonIgnore]
         public Vector2 Location
         {
             get => location;
             set => location = value;
         }
+
+        [JsonIgnore]
         public Vector2 Velocity
         {
             get => velocity;
