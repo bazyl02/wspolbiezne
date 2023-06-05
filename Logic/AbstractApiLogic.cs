@@ -29,6 +29,7 @@ namespace Logic
     public class AbstractApiLogic : LogicAbstractApi
     {
         private readonly DataAbstractApi data;
+        private object _lock = new object();
         public override ObservableCollection<BallData> Balls => data.GetBalls;
         public override int Width => data.Width;
         public override int Height => data.Height;
@@ -81,16 +82,19 @@ namespace Logic
                 {
                     continue;
                 }
-                float distance = Vector2.Distance(ball.Location, thisBall.Ball.Location);
-                if (distance <= (ball.Radius + thisBall.Ball.Radius))
+                lock (_lock)
                 {
-                    if (Vector2.Distance(ball.Location, thisBall.Ball.Location)
-                        - Vector2.Distance(ball.Location + ball.Velocity, thisBall.Ball.Location
-                        + thisBall.Ball.Velocity) > 0)
+                    float distance = Vector2.Distance(ball.Location, thisBall.Ball.Location);
+                    if (distance <= (ball.Radius + thisBall.Ball.Radius))
                     {
-                        if (list.Contains(ball.Color))
+                        if (Vector2.Distance(ball.Location, thisBall.Ball.Location)
+                            - Vector2.Distance(ball.Location + ball.Velocity, thisBall.Ball.Location
+                            + thisBall.Ball.Velocity) > 0)
                         {
-                            BallCrash(ball, thisBall.Ball);
+                            if (list.Contains(ball.Color))
+                            {
+                                BallCrash(ball, thisBall.Ball);
+                            }
                         }
                     }
                 }
