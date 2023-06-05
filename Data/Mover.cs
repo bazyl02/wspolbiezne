@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace Data
 {
@@ -58,20 +59,25 @@ namespace Data
             tasks.Add(Task.Run(async () =>
             {
                 System.IO.File.WriteAllText(fileName, string.Empty);
-                while (true)
-                {
-                    var options = new JsonSerializerOptions { WriteIndented = true };
 
-                    string jsonString = "[ \"Date/Time\": \"" + DateTime.Now.ToString() 
-                    + "\",\n  \"Balls list\": " + JsonSerializer.Serialize(balls, options) + " ]\n";
-
-                    lock (lockFile)
-                    {
-                        File.AppendAllText(fileName, jsonString);
-                    }
-                    await Task.Delay(1000);
-                }
+                System.Timers.Timer timer = new System.Timers.Timer();
+                timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+                timer.Interval = 1000;
+                timer.Enabled = true;
             }));
+        }
+
+        public void OnTimedEvent(object source, ElapsedEventArgs e)
+        {
+            var options = new JsonSerializerOptions { WriteIndented = true };
+
+            string jsonString = "[ \"Date/Time\": \"" + DateTime.Now.ToString()
+            + "\",\n  \"Balls list\": " + JsonSerializer.Serialize(balls, options) + " ]\n";
+
+            lock (lockFile)
+            {
+                File.AppendAllText(fileName, jsonString);
+            }
         }
 
         public object LockFile
